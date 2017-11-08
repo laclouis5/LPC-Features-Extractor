@@ -4,11 +4,18 @@ clear
 close all
 
 %% Param
+% Choose the path were WAV files are stored. Put the absolute path and not
+% the relative one.
 pathIn  = '/Users/laclouis5/Documents/Etudes/Enseirb-Matmeca/Cours_E3/S9_project/audioBank/data_solo';
+
+% Choose were the data produced will be stored. A subfolder named 'data'
+% will be created.
 pathOut = '/Users/laclouis5/Downloads';
 
+% Choose the number of LPC coeff, the threshold for removing speech blank
+% and others. Default: et f_ech = 8000, thresh = '', nb_coeff = 20.
 f_ech    = 8000;
-thresh   = ''; % non scalar value <=> no threshold
+thresh   = '';
 nb_coeff = 20;
 
 %% Main
