@@ -31,5 +31,5 @@ end
 
 % LPC
 LPC = lpc(sig_w(:, e_logical), nb_coeff)';
-LPC = LPC(2:end);
+LPC = LPC(2:end, :);
 end

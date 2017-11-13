@@ -17,12 +17,15 @@ pathIn  = '/Users/laclouis5/Documents/Etudes/Enseirb-Matmeca/Cours_E3/S9_project
 % Choose were the data produced will be stored. A subfolder named 'data'
 % will be created.
 pathOut = '/Users/laclouis5/Downloads';
+nbPers  = 36;
 
 % Choose the number of LPC coeff, the threshold for removing speech blank
 % and others. Default: et f_ech = 8000, thresh = '', nb_coeff = 20.
 f_ech    = 8000;
 thresh   = '';
 nb_coeff = 20;
+len_win  = 30;
+len_step = 15;
 
 %% Main
 currDir = cd;
@@ -32,11 +35,10 @@ if isfolder(pathIn) && isfolder(pathOut)
     % init
     subFolder = 'data';
     mkdir(pathOut, subFolder);
-    cd(pathIn);
+    pathOut = strcat(pathOut, SLASH, subFolder);
     
-    myFolderInfo = dir;
+    cd(pathIn);
     myFileList   = dir(strcat('**', SLASH, '*.wav'));
-    myFolderSize = length(myFolderInfo);
     myFileNumber = length(myFileList);
     
     % read
@@ -47,22 +49,21 @@ if isfolder(pathIn) && isfolder(pathOut)
         for idx = 1:myFileNumber
            
             % path to read
-            cd(pathIn);
+            % cd(pathIn);
             path = strcat(myFileList(idx).folder, SLASH, myFileList(idx).name);
             
             % function
-            fileOut = f_LPC(path, f_ech, 20, thresh, 30, 15);
+            fileOut = f_LPC(path, f_ech, nb_coeff, thresh, len_win, len_step);
             
             % file out and disp
-            nameOut = replace(myFileList(idx).name, '.wav', '');
-            nameOut = strcat(nameOut, '.mat');
+            nameOut = replace(myFileList(idx).name, 'wav', 'mat');
+            nameOut = strcat(pathOut, SLASH, nameOut);
             
-            cd(strcat(pathOut, SLASH, subFolder));
             save(nameOut, 'fileOut');
             
-            avancement = idx / myFileNumber;
             clc;
-            fprintf('Percent achieved: %.2f%%\n', 100*avancement);
+            avancement = 100 * idx / myFileNumber;
+            fprintf('Percent achieved: %.2f%%\n', avancement);
         end
         
         clc;
@@ -73,5 +74,18 @@ else
     
     error('PathIn or PathOut do no path does not exist');
 end
+
+% organize
+% cd(pathOut);
+% 
+% for idx = 1:nbPers
+%     
+%     listDir = dir(strcat('**', SLASH, '*.mat'));
+%     nameFile = listDir(1).name;
+%     
+%     idFolderFile = strcat(extractBefore(nameFile, 6));
+%     id2 = strcat(idFolderFile, '*');
+%     movefile(id2, idFolderFile);
+% end
 
 cd(currDir);
