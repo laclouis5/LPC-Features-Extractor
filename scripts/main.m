@@ -3,6 +3,12 @@ clc
 clear
 close all
 
+if isunix
+    SLASH = '/';
+else
+    SLASH = '\';
+end
+
 %% Param
 % Choose the path were WAV files are stored. Put the absolute path and not
 % the relative one.
@@ -29,7 +35,7 @@ if isfolder(pathIn) && isfolder(pathOut)
     cd(pathIn);
     
     myFolderInfo = dir;
-    myFileList   = dir('**/*.wav');
+    myFileList   = dir(strcat('**', SLASH, '*.wav'));
     myFolderSize = length(myFolderInfo);
     myFileNumber = length(myFileList);
     
@@ -38,12 +44,11 @@ if isfolder(pathIn) && isfolder(pathOut)
         error('Files must me in .waw type');
         
     else
-
         for idx = 1:myFileNumber
            
             % path to read
             cd(pathIn);
-            path = strcat(myFileList(idx).folder, '/', myFileList(idx).name);
+            path = strcat(myFileList(idx).folder, SLASH, myFileList(idx).name);
             
             % function
             fileOut = f_LPC(path, f_ech, 20, thresh, 30, 15);
@@ -52,7 +57,7 @@ if isfolder(pathIn) && isfolder(pathOut)
             nameOut = replace(myFileList(idx).name, '.wav', '');
             nameOut = strcat(nameOut, '.mat');
             
-            cd(strcat(pathOut, '/', subFolder));
+            cd(strcat(pathOut, SLASH, subFolder));
             save(nameOut, 'fileOut');
             
             avancement = idx / myFileNumber;
