@@ -25,8 +25,7 @@ if isscalar(thresh)
     e_logical = f_tresh_energy(energy, thresh);
 
 else
-    e_logical = true([1, size(sig_w, 2)]);
-    
+    e_logical = true([1, size(sig_w, 2)]);    
 end
 
 % LPC

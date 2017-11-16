@@ -20,7 +20,7 @@ data = {};
 
 for i = 1:nbPers
     if i < 10
-        d = load(strcat(('irm0'), string(i), '_f01_solo.mat'));
+        d = load(strcat(('irm_irm0'), string(i), '_f01_solo.mat'));
     else
         d = load(strcat(('irm'), string(i), '_f01_solo.mat'));
     end
