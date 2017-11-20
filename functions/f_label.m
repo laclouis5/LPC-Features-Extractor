@@ -1,4 +1,5 @@
 function [label, nb_label] = f_label(f_logic)
+% Function nut used anymore.
 
 len_sig  = length(f_logic);
 label    = zeros(len_sig, 1);

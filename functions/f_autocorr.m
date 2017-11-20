@@ -1,4 +1,6 @@
 function [autocorr] = f_autocorr(path, f_ech, time_window, time_step)
+% compute the autocorrelation of a speech windowed according to time_window
+% and time_step (in second) that define a rectangular window.
 
 % signal
 [speech, fs] = audioread(path);
@@ -17,7 +19,7 @@ speech_dw = resample(speech, f_ech, fs);
 % speech_f = filter([1, -0.95], 1, speech_dw);
 
 % windowing signal according to len_window and len_step
-[sig_w, nb_sig] = f_sig_windowed(speech_dw, rect_window, len_step);
+[sig_w, nb_sig] = f_sig_windowed(speech_dw, f_ech, rect_window, len_step);
 
 % 
 for i = 1:nb_sig

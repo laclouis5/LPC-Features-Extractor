@@ -5,10 +5,16 @@ clc
 
 nntraintool('close');
 
+if isunix
+    SLASH = '/';
+else
+    SLASH = '\';
+end
+
 %% Input Parameters
 pathIn = '/Users/laclouis5/Documents/Etudes/Enseirb-Matmeca/Cours_E3/S9_project/LPC';
 
-nbPers  = 16;
+nbPers  = 8;
 nbEch   = 500; % per person
 nbCoeff = 20;
 nbHiddenNeurones = floor((nbPers + nbCoeff) / 2);
@@ -20,9 +26,9 @@ data = {};
 
 for i = 1:nbPers
     if i < 10
-        d = load(strcat(('irm_irm0'), string(i), '_f01_solo.mat'));
+        d = load(strcat('irm0', string(i), SLASH, 'irm0', string(i), '_f01_solo.mat'));
     else
-        d = load(strcat(('irm'), string(i), '_f01_solo.mat'));
+        d = load(strcat('irm', string(i), SLASH,  'irm', string(i), '_f01_solo.mat'));
     end
     
     data{i} = d.fileOut;
@@ -45,8 +51,9 @@ end
 %%
 net = patternnet(nbHiddenNeurones);
 net.trainParam.epochs = 1000;
-net.trainParam.max_fail = 20;
+net.trainParam.max_fail = 150;
 net = train(net,x_train,t_train);
+net.layers{2}.transferFcn = 'tansig';
 
 % view(net)
 y = net(x_train);
