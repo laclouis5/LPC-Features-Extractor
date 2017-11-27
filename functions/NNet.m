@@ -12,11 +12,13 @@ else
 end
 
 %% Input Parameters
-pathIn = '/Users/laclouis5/Documents/Etudes/Enseirb-Matmeca/Cours_E3/S9_project/LPC';
+% pathIn = '/Users/laclouis5/Documents/Etudes/Enseirb-Matmeca/Cours_E3/S9_project/LPC';
+pathIn = '/Users/laclouis5/Documents/Etudes/Enseirb-Matmeca/Cours_E3/S9_project/MFCC';
 
-nbPers  = 8;
+nbPers  = 16;
 nbEch   = 500; % per person
 nbCoeff = 20;
+
 nbHiddenNeurones = floor((nbPers + nbCoeff) / 2);
 % nbHiddenNeurones = 100;
 
@@ -51,12 +53,10 @@ end
 %%
 net = patternnet(nbHiddenNeurones);
 net.trainParam.epochs = 1000;
-net.trainParam.max_fail = 150;
+net.trainParam.max_fail = 300;
 net = train(net,x_train,t_train);
-net.layers{2}.transferFcn = 'tansig';
 
 % view(net)
 y = net(x_train);
 perf = perform(net,t_train,y);
 % classes = vec2ind(y);
-
