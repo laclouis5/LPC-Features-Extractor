@@ -1,6 +1,6 @@
 function [ pitch] = f_pitch( signal_window, fs )
-%f_pitch detects voiced sound by calculating autocorrelation. Result gives
-%a pitch value.
+%   f_pitch detects voiced sound by calculating autocorrelation. Result gives
+%   a pitch value.
 %   signal_window: speech divided in window: 2D matrix [data x time]
 %   fs: the sampling frequency
 %   pitch: the frequency which characterized voiced sound
@@ -8,9 +8,9 @@ function [ pitch] = f_pitch( signal_window, fs )
 pitch_windows = [];
 L = size(signal_window, 1);
 threshold = 0.4;
-kmin = floor(fs/400);
-kmax = floor(fs/80);
-[b,a] = butter(10,2*1200/fs);
+kmin   = floor(fs/400);
+kmax   = floor(fs/80);
+[b, a] = butter(10,2*1200/fs);
 
 for i = 1: size(signal_window, 2)
     % low-pass filter to remove frequency greater than 1200Hz
@@ -31,5 +31,5 @@ for i = 1: size(signal_window, 2)
     end
 end
 
-pitch= mean(pitch_windows);
+pitch = mean(pitch_windows);
 

@@ -2,7 +2,6 @@ close all
 clear
 clc
 
-
 path  = '/Users/laclouis5/Documents/Etudes/Enseirb-Matmeca/Cours_E3/S9_project/audioBank/data_solo/frm02/frm02_s05_solo.wav';
 f_ech = 8000;
 
